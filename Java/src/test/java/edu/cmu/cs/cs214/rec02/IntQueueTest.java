@@ -110,5 +110,35 @@ public class IntQueueTest {
         }
     }
 
+    @Test
+    public void testClear() {
+        mQueue.enqueue(testList.get(0));
+        mQueue.enqueue(testList.get(1));
+        mQueue.clear();
+        assertEquals(true, mQueue.isEmpty());
+    }
 
+    @Test
+    public void testDequeueEmptyQueue() {
+        assertEquals(null, mQueue.dequeue());
+    }
+
+    @Test
+    public void testEnsureCapacity() {
+        // advance head for line coverage
+        mQueue.enqueue(testList.get(0));
+        mQueue.dequeue();
+
+        int repeat = 5;
+        int dequeueCount = 2;
+        for (int i = 0; i < repeat; i++) {
+            for (int num : testList) {
+                mQueue.enqueue(num);
+            }
+        }
+        for (int i = 0; i < dequeueCount; i++) {
+            mQueue.dequeue();
+        }
+        assertEquals(repeat * testList.size() - dequeueCount, mQueue.size());
+    }
 }
